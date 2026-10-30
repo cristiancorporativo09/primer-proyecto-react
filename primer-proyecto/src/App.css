@@ -1,55 +1,324 @@
-.encabezado {
- background-color: #1f3864;
- color: white;
- padding: 1rem 2rem;
- display: flex;
- justify-content: space-between;
- align-items: center; 
+/* Variables de color y fuentes globales */
+:root {
+  --color-primario: #39a900; /* Verde SENA */
+  --color-secundario: #00324d; /* Azul oscuro corporativo */
+  --color-fondo: #f4f7f6;
+  --color-superficie: #ffffff;
+  --color-texto: #333333;
+  --color-texto-mutado: #666666;
+  --color-borde: #e0e0e0;
+  --color-destacado: #fff3cd;
+  --color-destacado-borde: #ffeba2;
+  --fuente-principal: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.encabezado h1  {
+/* Reset básico */
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-size: 1.5rem;
+  padding: 0;
 }
 
-.encabezado nav a {
-  color: white;
-  margin-left: 1 rem;
-  text-decoration: none;
+body {
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  font-family: var(--fuente-principal);
 }
 
+/* Estructura Principal de la Aplicación (Layout Grid) */
+.layout {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "sidebar main"
+    "footer footer";
+  grid-template-columns: 260px 1fr;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
 
+/* Contenido Principal */
 .contenido {
+  grid-area: main;
   padding: 2rem;
 }
 
 .contenido h2 {
-  color: #1f3864;
+  color: var(--color-secundario);
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
 }
 
+/* Sección de Tarjetas (Grid de 3 columnas flexibles) */
 .tarjetas {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin-top: 2rem;
 }
 
-.tarjeta {
-  background-color: white;
-  border-radius: 8px;
-  padding: 1rem;
-  flex: 1;
-  min-width: 200px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  border-top: 4px solid #2e75b6;
-}
+/* ---- ESTILOS DE COMPONENTES ---- */
 
-.tarjeta img {
-  width: 48px;
-}
-
-.pie {
-  text-align: center;
-  padding: 1rem;
-  background-color: #1f3864;
+/* 1. Componente: Encabezado */
+.encabezado {
+  align-items: center;
+  background-color: var(--color-secundario);
   color: white;
+  display: flex;
+  grid-area: header;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+}
+
+.encabezado div.encabezado {
+  align-items: center;
+  display: flex;
+  gap: 2rem;
+}
+
+.encabezado h1 {
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+}
+
+.encabezado nav a {
+  color: #e0e0e0;
+  font-weight: 500;
+  margin-right: 1.5rem;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.encabezado nav a:hover {
+  color: var(--color-primario);
+}
+
+/* 2. Componente: MenuUsuario */
+.menu-usuario {
+  position: relative;
+}
+
+.menu-usuario-boton {
+  align-items: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  gap: 0.75rem;
+  text-align: left;
+}
+
+.avatar {
+  border: 2px solid var(--color-primario);
+  border-radius: 50%;
+  height: 45px;
+  object-fit: cover;
+  width: 45px;
+}
+
+.menu-usuario-datos {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-usuario-nombre {
+  color: white;
+  font-weight: bold;
+}
+
+.menu-usuario-rol {
+  color: #b0c4de;
+  font-size: 0.8rem;
+}
+
+/* Oculto por defecto, se puede activar añadiendo una clase con JS o con :focus-within */
+.menu-desplegable {
+  background-color: var(--color-superficie);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: none; 
+  list-style: none;
+  padding: 0.5rem 0;
+  position: absolute;
+  right: 0;
+  top: 110%;
+  width: 160px;
+  z-index: 10;
+}
+
+.menu-usuario:hover .menu-desplegable {
+  display: block; /* Muestra el menú al pasar el mouse por encima */
+}
+
+.menu-desplegable li a {
+  color: var(--color-texto);
+  display: block;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+}
+
+.menu-desplegable li a:hover {
+  background-color: var(--color-fondo);
+}
+
+.menu-desplegable .separador {
+  background-color: var(--color-borde);
+  height: 1px;
+  margin: 0.5rem 0;
+}
+
+.menu-desplegable .cerrar-sesion {
+  color: #d9534f;
+}
+
+/* 3. Componente: Sidebar */
+.Sidebar {
+  background-color: var(--color-superficie);
+  border-right: 1px solid var(--color-borde);
+  display: flex;
+  flex-direction: column;
+  grid-area: sidebar;
+  justify-content: space-between;
+  padding: 2rem 1.5rem;
+}
+
+.Sidebar-titulo {
+  color: var(--color-secundario);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+}
+
+.sidebar-menu {
+  list-style: none;
+  margin-top: 2rem;
+}
+
+.sidebar-menu li {
+  margin-bottom: 0.75rem;
+}
+
+.sidebar-menu a {
+  border-radius: 4px;
+  color: var(--color-texto-mutado);
+  display: block;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.sidebar-menu a:hover {
+  background-color: rgba(57, 169, 0, 0.1);
+  color: var(--color-primario);
+  font-weight: 600;
+}
+
+.sidebar-pie {
+  color: var(--color-texto-mutado);
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+/* 4. Componente: Presentacion */
+.contenido section:first-of-type {
+  background-color: var(--color-superficie);
+  border-left: 4px solid var(--color-primario);
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+}
+
+.contenido section:first-of-type h1 {
+  color: var(--color-primario);
+  font-size: 1.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.contenido section:first-of-type h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.contenido section:first-of-type h3 {
+  color: var(--color-texto-mutado);
+  font-size: 1rem;
+  font-weight: normal;
+  margin-bottom: 0.4rem;
+}
+
+/* 5. Componente: Tarjeta */
+.tarjeta, .tarjeta-destacada {
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.tarjeta-destacada {
+  background-color: var(--color-destacado);
+  border-color: var(--color-destacado-borde);
+}
+
+.tarjeta:hover, .tarjeta-destacada:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+}
+
+.tarjeta-icono {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.tarjeta h3 {
+  color: var(--color-secundario);
+  text-transform: capitalize;
+}
+
+.tarjeta p {
+  color: var(--color-texto-mutado);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.tarjeta-horas {
+  color: var(--color-primario) !important;
+  font-weight: bold;
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+/* 6. Componente: PiePagina */
+.pie {
+  background-color: var(--color-secundario);
+  color: #ffffff;
+  grid-area: footer;
+  padding: 1rem;
+  text-align: center;
+}
+
+/* ---- RESPONSIVE DESIGN ---- */
+@media (max-width: 768px) {
+  .layout {
+    grid-template-areas:
+      "header"
+      "sidebar"
+      "main"
+      "footer";
+    grid-template-columns: 1fr;
+  }
+  
+  .Sidebar {
+    border-bottom: 1px solid var(--color-borde);
+    border-right: none;
+  }
+  
+  .encabezado div.encabezado {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 }
